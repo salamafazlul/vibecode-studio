@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 
-const AddRepo = () => {
+const AddRepoButton = () => {
   return (
     <div
       className="group px-6 py-6 flex flex-row justify-between items-center border rounded-lg bg-muted cursor-pointer 
@@ -43,4 +43,4 @@ const AddRepo = () => {
   );
 };
 
-export default AddRepo;
+export default AddRepoButton;
