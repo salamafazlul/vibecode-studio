@@ -1,11 +1,12 @@
 "use server";
 import { currentUser } from "@/features/auth/actions";
 import { db } from "@/lib/db";
+import { Templates } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export const createPlayground = async (data: {
   title: string;
-  template: "REACT" | "NEXTJS" | "EXPRESS" | "VUE" | "HONO" | "ANGULAR";
+  template: Templates;
   description?: string;
 }) => {
   const { template, title, description } = data;
