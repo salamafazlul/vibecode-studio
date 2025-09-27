@@ -147,8 +147,8 @@ const TemplateNode = ({
       <SidebarMenuItem>
         <div className="flex items-center group">
           <SidebarMenuButton
-            // isActive={isSelected}
-            // onClick={() => onFileSelect?.(file)}
+            isActive={isSelected}
+            onClick={() => onFileSelect?.(file)}
             className="flex-1"
           >
             <File className="h-4 w-4 mr-2 shrink-0" />
