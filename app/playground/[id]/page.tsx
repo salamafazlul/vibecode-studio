@@ -41,6 +41,10 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { PlaygroundEditor } from "@/features/playground/components/playground-editor";
+import { WebContainer } from "@webcontainer/api";
+import WebContainerPreview from "@/features/webContainers/components/webcontainer-preview";
+import { useWebContainer } from "@/features/webContainers/hooks/useWebContainer";
+import LoadingStep from "@/components/ui/loader";
 
 const Page: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -70,6 +74,15 @@ const Page: React.FC = () => {
     setOpenFiles,
   } = useFileExplorer();
 
+  const {
+    serverUrl,
+    isLoading: containerLoading,
+    error: containerError,
+    instance,
+    writeFileSync,
+    // @ts-ignore
+  } = useWebContainer({ templateData });
+
   // Set template data when playground loads
   React.useEffect(() => {
     setPlaygroundId(id);
@@ -89,10 +102,53 @@ const Page: React.FC = () => {
     openFile(file);
   };
 
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] p-4">
+        <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
+        <h2 className="text-xl font-semibold text-red-600 mb-2">
+          Something went wrong
+        </h2>
+        <p className="text-gray-600 mb-4">{error}</p>
+        <Button onClick={() => window.location.reload()} variant="destructive">
+          Try Again
+        </Button>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] p-4">
+        <div className="w-full max-w-md p-6 rounded-lg shadow-sm border">
+          <h2 className="text-xl font-semibold mb-6 text-center">
+            Loading Playground
+          </h2>
+          <div className="mb-8">
+            <LoadingStep
+              currentStep={1}
+              step={1}
+              label="Loading playground data"
+            />
+            <LoadingStep
+              currentStep={2}
+              step={2}
+              label="Setting up environment"
+            />
+            <LoadingStep currentStep={3} step={3} label="Ready to code" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <TooltipProvider>
       <>
-        <TemplateFileTree data={templateData!} onFileSelect={handleFileSelect} />
+        <TemplateFileTree
+          data={templateData!}
+          onFileSelect={handleFileSelect}
+        />
 
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -179,7 +235,6 @@ const Page: React.FC = () => {
           <div className="h-[calc(100vh-4rem)]">
             {openFiles.length > 0 ? (
               <div className="h-full flex flex-col">
-                
                 <div className="border-b bg-muted/30">
                   <Tabs
                     value={activeFileId || ""}
@@ -242,6 +297,21 @@ const Page: React.FC = () => {
                         }
                       />
                     </ResizablePanel>
+                    {isPreviewVisible && (
+                      <>
+                        <ResizableHandle />
+                        <ResizablePanel defaultSize={50} />
+                        <WebContainerPreview
+                          templateData={templateData!}
+                          instance={instance}
+                          writeFileSync={writeFileSync}
+                          isLoading={containerLoading}
+                          error={containerError}
+                          serverUrl={serverUrl!}
+                          forceResetup={false}
+                        />
+                      </>
+                    )}
                   </ResizablePanelGroup>
                 </div>
               </div>
