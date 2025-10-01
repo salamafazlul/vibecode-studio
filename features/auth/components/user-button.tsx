@@ -13,39 +13,41 @@ import { cn } from "@/lib/utils";
 import { LogOut, User } from "lucide-react";
 import LogoutButton from "./logout-button";
 import { useCurrentUser } from "../hooks/use-current-user";
+import Image from "next/image";
 
 const UserButton = () => {
-
-  const user = useCurrentUser()
+  const user = useCurrentUser();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <div className={cn("relative rounded-full")}>
           <Avatar>
-            <AvatarImage src={user?.image!} alt={user?.name!} />
-            <AvatarFallback className="bg-red-500">
+            <Image
+              src={user?.image ?? "/default-avatar.png"}
+              alt={user?.name ?? "Avatar"}
+              width={40}
+              height={40}
+            />
+            <AvatarFallback>
               <User className="text-white" />
             </AvatarFallback>
           </Avatar>
         </div>
       </DropdownMenuTrigger>
 
-    <DropdownMenuContent className="mr-4">
-      <DropdownMenuItem>
-        <span>
-          {user?.email}
-        </span>
-      </DropdownMenuItem>
-      <DropdownMenuSeparator/>
+      <DropdownMenuContent className="mr-4">
+        <DropdownMenuItem>
+          <span>{user?.email}</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <LogoutButton>
-            <DropdownMenuItem>
-                <LogOut className="h-4 w-4 mr-2"/>
-                LogOut
-            </DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogOut className="h-4 w-4 mr-2" />
+            LogOut
+          </DropdownMenuItem>
         </LogoutButton>
-    </DropdownMenuContent>
-
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 };
