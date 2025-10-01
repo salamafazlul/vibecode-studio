@@ -1,23 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="t2 d2">
-  <title id="t2">VibeCode Studio icon</title>
-  <desc id="d2">Circular icon with gradient background and a white stylized V plus angle bracket for a developer vibe.</desc>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="logo-title logo-desc">
+  <title id="logo-title">VibeCode Studio</title>
+  <desc id="logo-desc">Modern minimalist V with code elements</desc>
+  
   <defs>
-    <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#00d4ff"/>
-      <stop offset="1" stop-color="#ff4ecb"/>
+    <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="50%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#ff4ecb"/>
     </linearGradient>
+    
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#ff4ecb" stop-opacity="0.8"/>
+    </linearGradient>
+    
+    <filter id="outerGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="blur" in2="SourceGraphic" operator="out"/>
+      <feFlood flood-color="#00d4ff" flood-opacity="0.5"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-
-  <!-- background -->
-  <rect width="128" height="128" rx="28" fill="url(#g2)"/>
-
-  <!-- V shape -->
-  <path d="M34 36 L64 92 L94 36 L86 36 L64 78 L42 36 Z" fill="white"/>
-
-  <!-- small code chevron -->
-  <g transform="translate(12,12)" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="6,40 18,28 6,16"/>
-    <polyline points="100,40 88,28 100,16"/>
-  </g>
+  
+  <!-- Bold geometric V -->
+  <path d="M 60 60 L 100 130 L 140 60" 
+        stroke="url(#mainGrad)" 
+        stroke-width="12" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        filter="url(#outerGlow)"/>
+  
+  <!-- Bold code angle brackets -->
+  <polyline points="45,80 30,100 45,120" 
+            stroke="url(#mainGrad)" 
+            stroke-width="8" 
+            fill="none" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            filter="url(#outerGlow)"/>
+  
+  <polyline points="155,80 170,100 155,120" 
+            stroke="url(#mainGrad)" 
+            stroke-width="8" 
+            fill="none" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            filter="url(#outerGlow)"/>
 </svg>

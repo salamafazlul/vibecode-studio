@@ -36,6 +36,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface PlaygroundData {
   id: string;
@@ -70,8 +71,15 @@ export function DashboardSidebar({
   return (
     <Sidebar variant="inset" collapsible="icon" className="border-1 border-r">
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-4 py-3 justify-center">
-          <Image src={"/logo.svg"} alt="logo" height={60} width={60} />
+        <div className="flex items-center justify-between px-2 py-3 w-full">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="logo" height={50} width={50} />
+            <span className="font-bold text-sm">VibeCode</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+          </div>
         </div>
       </SidebarHeader>
 
